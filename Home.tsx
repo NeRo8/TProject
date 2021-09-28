@@ -62,7 +62,7 @@ export default function Home({navigation}) {
 
   const withNavigation = useRef([] as number[]).current;
   const withCallback = useRef([] as number[]).current;
-  const result = useRef({hw: 0, fw: 0}).current;
+  const result = useRef({hookWin: 0, functionWin: 0}).current;
 
   const onPressNavigation = useCallback(value => {
     navigation.navigate('Home', value);
@@ -110,9 +110,9 @@ export default function Home({navigation}) {
     const funValue = withCallback[index];
 
     if (navValue < funValue) {
-      result.hw = result.hw + 1;
+      result.hookWin = result.hookWin + 1;
     } else {
-      result.fw = result.fw + 1;
+      result.functionWin = result.functionWin + 1;
     }
   });
 
