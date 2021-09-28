@@ -25,7 +25,7 @@ interface InputProps extends TextInputProps {
   onPress?: (itemId: number) => void;
 }
 
-const Item = memo((props: InputProps) => {
+const Item = (props: InputProps) => {
   const {containerStyle, ...inputProps} = props;
 
   const navigation = useNavigation();
@@ -39,13 +39,13 @@ const Item = memo((props: InputProps) => {
       onPress={onPressItem}
       style={[styles.containerStyle, containerStyle]}></Pressable>
   );
-});
+};
 
-const ItemCallback = memo((props: InputProps) => {
+const ItemCallback = (props: InputProps) => {
   const {containerStyle, ...inputProps} = props;
 
   const onPressItem = () => {
-    props.onPress();
+    props.onPress(props.value);
   };
 
   return (
@@ -53,31 +53,30 @@ const ItemCallback = memo((props: InputProps) => {
       onPress={onPressItem}
       style={[styles.containerStyle, containerStyle]}></Pressable>
   );
-});
+};
 
 const TEMP_ARRAY = Array(1000).fill(1);
 
 export default function Home({navigation}) {
   const [isRended, setRended] = useState(false);
 
+  //Array rended result for hook
   const withNavigation = useRef([] as number[]).current;
+  //Array rended result for useCallback
   const withCallback = useRef([] as number[]).current;
+  //Results
   const result = useRef({hookWin: 0, functionWin: 0}).current;
 
   const onPressNavigation = useCallback(value => {
     navigation.navigate('Home', value);
   }, []);
 
-  const renderItem = (item, index) => <Item key={index.toString()} />;
-
-  const renderItemCallback = (item, index) => (
-    <ItemCallback key={index.toString()} onPress={onPressNavigation} />
-  );
-
   const List = () => {
     const start = performance.now();
 
-    const itemList = TEMP_ARRAY.map(renderItem);
+    const itemList = TEMP_ARRAY.map((item, index) => (
+      <Item key={index.toString()} />
+    ));
 
     const end = performance.now();
 
@@ -89,7 +88,9 @@ export default function Home({navigation}) {
   const ListCallback = () => {
     const start = performance.now();
 
-    const itemList = TEMP_ARRAY.map(renderItemCallback);
+    const itemList = TEMP_ARRAY.map((item, index) => (
+      <ItemCallback key={index.toString()} onPress={onPressNavigation} />
+    ));
 
     const end = performance.now();
 
@@ -97,14 +98,6 @@ export default function Home({navigation}) {
 
     return itemList;
   };
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRended(!isRended);
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [isRended]);
 
   withNavigation.forEach((navValue, index) => {
     const funValue = withCallback[index];
@@ -117,6 +110,17 @@ export default function Home({navigation}) {
   });
 
   console.log(result);
+
+  result.hookWin = 0;
+  result.functionWin = 0;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRended(!isRended);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [isRended]);
 
   return (
     <View style={{flex: 1}}>
