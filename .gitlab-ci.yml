@@ -1,0 +1,26 @@
+image: node:18.20-alpine
+
+stages:
+    - check
+
+before_script:
+    - npm ci
+
+cache:
+    paths:
+        - node_modules/
+
+lint_check:
+    stage: check
+    script:
+        - npm run lint
+
+test_check:
+    stage: check
+    script:
+        - npm run test
+
+ts_check:
+    stage: check
+    script:
+        - npm run tsc
