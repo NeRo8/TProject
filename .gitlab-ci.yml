@@ -1,0 +1,20 @@
+stages:
+    - check
+
+before_script:
+    - npm ci
+
+lint_check:
+    stage: check
+    script:
+        - npm run lint
+
+test_check:
+    stage: check
+    script:
+        - npm run test
+
+ts_check:
+    stage: check
+    script:
+        - npm run tsc
