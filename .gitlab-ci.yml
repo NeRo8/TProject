@@ -29,8 +29,8 @@ test_check:
   artifacts:
     when: always
     reports:
-    coverage_report:
-      coverage_format: cobertura
+      coverage_report:
+        coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
       junit:
         - junit.xml
