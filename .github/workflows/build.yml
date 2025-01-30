@@ -61,3 +61,13 @@ jobs:
           restore-keys: npm-${{ runner.os }}-
       - run: npm ci --prefer-offline
       - run: npm run test
+      - name: Upload Jest JUnit report
+        uses: actions/upload-artifact@v3
+        with:
+          name: junit-report
+          path: junit.xml
+      - name: Upload Jest Cobertura report
+        uses: actions/upload-artifact@v3
+        with:
+          name: cobertura-report
+          path: coverage/cobertura-coverage.xml
