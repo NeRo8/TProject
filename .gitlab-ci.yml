@@ -25,6 +25,16 @@ test_check:
   stage: test
   script:
     - npm run test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - junit.xml
+
+test_coverage_check:
+  stage: test
+  script:
+    - npm run test:coverage
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
   artifacts:
     when: always
@@ -32,5 +42,3 @@ test_check:
       coverage_report:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
-      junit:
-        - junit.xml
