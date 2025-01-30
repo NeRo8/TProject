@@ -6,7 +6,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/react-native';
 import {Test} from '../Test';
 
-test('renders correctly', async () => {
+test('renders test file correctly', async () => {
   render(<Test />);
   expect(screen.getByText('Test component')).toBeTruthy();
 });
