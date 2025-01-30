@@ -9,19 +9,8 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.20-alpine]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    container: node:18.20-alpine
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'node_modules/'
     - run: npm ci
