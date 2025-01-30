@@ -22,7 +22,6 @@ ts_check:
     - npm run tsc
 
 test_check:
-  image: node:18.20-alpine
   stage: test
   script:
     - npm run test
