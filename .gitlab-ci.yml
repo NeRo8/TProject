@@ -28,8 +28,6 @@ test_check:
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
   artifacts:
     when: always
-    paths:
-      - coverage/
     reports:
       coverage_report:
         coverage_format: cobertura
