@@ -65,7 +65,8 @@ build_android_apk:
     - cd android
     - ./gradlew clean
     - ./gradlew assembleRelease
-    - cp app/build/outputs/apk/release/app-release.apk app-release.apk
+    - cd ..
+    - cp android/app/build/outputs/apk/release/app-release.apk app-release.apk
   cache:
     paths:
       - node_modules/
