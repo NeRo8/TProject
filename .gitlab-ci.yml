@@ -1,6 +1,7 @@
 image: node:18.20-alpine
 
 stages:
+    - test
     - check
 
 before_script:
@@ -15,12 +16,22 @@ lint_check:
     script:
         - npm run lint
 
-test_check:
-    stage: check
-    script:
-        - npm run test
-
 ts_check:
     stage: check
     script:
         - npm run tsc
+
+
+test_check:
+    image: node:18.20-alpine
+    stage: test
+    before_script:
+        - npm install jest
+        - npm install --save-dev jest-junit
+    script:
+        - jest --ci --reporters=default --reporters=jest-junit
+    artifacts:
+        when: always
+        reports:
+            junit:
+                - junit.xml
