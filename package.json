@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest --ci --reporters=default --reporters=jest-junit --coverage --coverageReporters=cobertura",
+    "test": "jest --reporters=default --reporters=jest-junit",
+    "test:coverage":"jest --coverage --coverageReporters=cobertura",
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
