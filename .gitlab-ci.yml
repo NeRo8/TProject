@@ -56,5 +56,5 @@ build_android_apk:
   artifacts:
     name: app-release.apk
     paths:
-      - build/android/app/build/outputs/apk/release/app-release.apk
+      - android/app/build/outputs/apk/release/app-release.apk
     expire_in: 1 week
