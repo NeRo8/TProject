@@ -26,6 +26,7 @@ test_check:
   stage: test
   script:
     - npm run test
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
   artifacts:
     when: always
     reports:
