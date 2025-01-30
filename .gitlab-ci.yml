@@ -7,11 +7,18 @@ stages:
 
 before_script:
   - npm ci
-  - export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/build-tools/latest
-  - mkdir -p $ANDROID_HOME
+   # Install dependencies
+  - sudo apt-get update && sudo apt-get install -y wget unzip openjdk-11-jdk
+  # Download and install the Android SDK command-line tools
+  - wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O commandlinetools.zip
+  - unzip commandlinetools.zip -d $ANDROID_HOME
+  - rm commandlinetools.zip
+  # Set up the Android SDK
+  - export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+  # Accept licenses and install required tools and SDK
+  - yes | sdkmanager --licenses
   - sdkmanager --update
-  - sdkmanager "platform-tools" "build-tools;latest" "platforms;android-33"
-  - sdkmanager --install "platforms;android-33" 
+  - sdkmanager "platform-tools" "build-tools;latest" "platforms;android-33"  # Replace with the latest SDK version
 
 cache:
   paths:
