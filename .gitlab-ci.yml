@@ -1,35 +1,49 @@
-image: node:18.20-alpine  # Define the image here for all jobs
-
 stages:
   - check
   - test
   - build
 
-cache:
+.node_before: &node_before
+  - node -v
+  - npm -v
+  # NOTE: --unsafe-perm is required for patches
+  # SOURCE: https://github.com/ds300/patch-package/issues/185
+  - npm ci --cache "$CI_PROJECT_DIR/.npm" --prefer-offline --unsafe-perm
+
+.node_cache: &node_cache
+  key:
+    files:
+      - package-lock.json
   paths:
-    - node_modules/
+    - .npm/
+  policy: pull
+
+.check_template:
+  stage: check
+  image: node:18.20-alpine
+  before_script:
+    - *node_before
+  cache:
+    - *node_cache
+
 
 lint_check:
-  stage: check
-  before_script:
-    - npm ci
+  extends: 
+    - .check_template
   script:
     - npm run lint
 
+
 ts_check:
-  image: node:18.20-alpine
-  stage: check
-  before_script:
-    - npm ci
+  extends: 
+    - .check_template
   script:
     - npm run tsc
 
 
 test_check:
-  image: node:18.20-alpine
-  stage: test
-  before_script:
-    - npm ci
+  extends: 
+    - .check_template
   script:
     - npm run test
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
@@ -45,8 +59,9 @@ test_check:
 build_android_apk:
   image: reactnativecommunity/react-native-android:latest
   stage: build
+  before_script:
+    - *node_before
   script:
-    - npm ci
     - cd android
     - ./gradlew clean
     - ./gradlew assembleRelease
@@ -56,5 +71,5 @@ build_android_apk:
   artifacts:
     name: app-release
     paths:
-      - android/app/build/outputs/apk/release/app-release.apk
+      - app-release.apk
     expire_in: 1 week
