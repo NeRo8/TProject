@@ -61,6 +61,3 @@ jobs:
           restore-keys: npm-${{ runner.os }}-
       - run: npm ci --prefer-offline
       - run: npm run test
-      - uses: codecov/codecov-action@v4
-        with:
-          files: coverage/cobertura-coverage.xml
