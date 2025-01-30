@@ -1,3 +1,6 @@
+[![coverage report](https://gitlab.com/NeRo8/tproject/badges/main/coverage.svg)](https://gitlab.com/NeRo8/tproject/-/commits/main)
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
