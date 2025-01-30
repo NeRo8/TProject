@@ -1,37 +1,33 @@
 image: node:18.20-alpine
 
 stages:
-    - test
-    - check
+  - test
+  - check
 
 before_script:
-    - npm ci
+  - npm ci
 
 cache:
-    paths:
-        - node_modules/
+  paths:
+    - node_modules/
 
 lint_check:
-    stage: check
-    script:
-        - npm run lint
+  stage: check
+  script:
+    - npm run lint
 
 ts_check:
-    stage: check
-    script:
-        - npm run tsc
-
+  stage: check
+  script:
+    - npm run tsc
 
 test_check:
-    image: node:18.20-alpine
-    stage: test
-    before_script:
-        - npm install jest
-        - npm install --save-dev jest-junit
-    script:
-        - jest --ci --reporters=default --reporters=jest-junit
-    artifacts:
-        when: always
-        reports:
-            junit:
-                - junit.xml
+  image: node:18.20-alpine
+  stage: test
+  script:
+    - npm run test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - junit.xml
