@@ -1,59 +1,60 @@
-image: node:18.20-alpine
+image: node:18.20-alpine  # Define the image here for all jobs
 
 stages:
+  - check
+  - test
   - build
-  # - check
-  # - test
-
-before_script:
-  - npm ci
-  - export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/build-tools/latest
-  - mkdir -p $ANDROID_HOME
-  - sdkmanager --update
-  - sdkmanager "platform-tools" "build-tools;latest" "platforms;android-33"
-  - sdkmanager --install "platforms;android-33" 
 
 cache:
   paths:
     - node_modules/
 
-variables:
-  ANDROID_HOME: "/opt/android-sdk"
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-  ANDROID_SDK_ROOT: "/opt/android-sdk"
-  JAVA_HOME: "/usr/lib/jvm/java-11-openjdk-amd64"
+lint_check:
+  stage: check
+  before_script:
+    - npm ci
+  script:
+    - npm run lint
 
-# lint_check:
-#   stage: check
-#   script:
-#     - npm run lint
+ts_check:
+  image: node:18.20-alpine
+  stage: check
+  before_script:
+    - npm ci
+  script:
+    - npm run tsc
 
-# ts_check:
-#   stage: check
-#   script:
-#     - npm run tsc
 
-# test_check:
-#   stage: test
-#   script:
-#     - npm run test
-#   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
-#   artifacts:
-#     when: always
-#     reports:
-#       coverage_report:
-#         coverage_format: cobertura
-#         path: coverage/cobertura-coverage.xml
-#       junit:
-#         - junit.xml
+test_check:
+  image: node:18.20-alpine
+  stage: test
+  before_script:
+    - npm ci
+  script:
+    - npm run test
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
+  artifacts:
+    when: always
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+      junit:
+        - junit.xml
 
 build_android_apk:
+  image: reactnativecommunity/react-native-android:latest
   stage: build
   script:
+    - npm ci
     - cd android
     - ./gradlew clean
     - ./gradlew assembleRelease
+  cache:
+    paths:
+      - node_modules/
   artifacts:
+    name: app-release.apk
     paths:
       - build/android/app/build/outputs/apk/release/app-release.apk
     expire_in: 1 week
