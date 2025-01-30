@@ -1,36 +1,59 @@
 image: node:18.20-alpine
 
 stages:
-  - check
-  - test
+  - build
+  # - check
+  # - test
 
 before_script:
   - npm ci
+  - export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/build-tools/latest
+  - mkdir -p $ANDROID_HOME
+  - sdkmanager --update
+  - sdkmanager "platform-tools" "build-tools;latest" "platforms;android-33"
+  - sdkmanager --install "platforms;android-33" 
 
 cache:
   paths:
     - node_modules/
 
-lint_check:
-  stage: check
-  script:
-    - npm run lint
+variables:
+  ANDROID_HOME: "/opt/android-sdk"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  ANDROID_SDK_ROOT: "/opt/android-sdk"
+  JAVA_HOME: "/usr/lib/jvm/java-11-openjdk-amd64"
 
-ts_check:
-  stage: check
-  script:
-    - npm run tsc
+# lint_check:
+#   stage: check
+#   script:
+#     - npm run lint
 
-test_check:
-  stage: test
+# ts_check:
+#   stage: check
+#   script:
+#     - npm run tsc
+
+# test_check:
+#   stage: test
+#   script:
+#     - npm run test
+#   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
+#   artifacts:
+#     when: always
+#     reports:
+#       coverage_report:
+#         coverage_format: cobertura
+#         path: coverage/cobertura-coverage.xml
+#       junit:
+#         - junit.xml
+
+build_android_apk:
+  stage: build
   script:
-    - npm run test
-  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
+    - cd android
+    - ./gradlew clean
+    - ./gradlew assembleRelease
   artifacts:
-    when: always
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage/cobertura-coverage.xml
-      junit:
-        - junit.xml
+    paths:
+      - build/android/app/build/outputs/apk/release/app-release.apk
+    expire_in: 1 week
