@@ -23,8 +23,10 @@ ts_check:
 
 
 test_check:
+    image: node:18.20-alpine
     stage: test
     before_script:
+        - npm install jest
         - npm install --save-dev jest-junit
     script:
         - jest --ci --reporters=default --reporters=jest-junit
