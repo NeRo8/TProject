@@ -26,23 +26,29 @@ stages:
   cache:
     - *node_cache
 
+.build_rules:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "stage"
+      when: always
 
 lint_check:
-  extends: 
+  extends:
     - .check_template
   script:
     - npm run lint
 
-
 ts_check:
-  extends: 
+  extends:
     - .check_template
   script:
     - npm run tsc
 
-
 test_check:
-  extends: 
+  extends:
     - .check_template
   script:
     - npm run test
@@ -59,6 +65,8 @@ test_check:
 build_android_apk:
   image: reactnativecommunity/react-native-android:latest
   stage: build
+  extends:
+    - .build_rules
   before_script:
     - *node_before
   script:
