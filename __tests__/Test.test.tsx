@@ -3,8 +3,8 @@
  */
 
 import React from 'react';
-import {render, screen} from '@testing-library/react-native';
-import {Test} from '../Test';
+import { render, screen } from '@testing-library/react-native';
+import { Test } from '../Test';
 
 test('renders test file correctly', async () => {
   render(<Test />);
