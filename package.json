@@ -13,6 +13,10 @@
     "tsc": "tsc --noEmit",
     "prepare": "node .husky/install.mjs"
   },
+  "validate-branch-name": {
+    "pattern": "^(master|main|develop){1}$|^(feature|fix|hotfix|refactor|test|chore)/.+$",
+    "errorMsg": "Error: please use a valid branch name. Valid branch names are: master, main, develop, feature/, fix/, hotfix/, refactor/, test/, chore/"
+  },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
@@ -53,7 +57,8 @@
     "lint-staged": "^15.4.3",
     "prettier": "^3.4.2",
     "react-test-renderer": "^18.3.1",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "validate-branch-name": "^1.3.2"
   },
   "engines": {
     "node": ">=18"
