@@ -26,10 +26,17 @@ stages:
   cache:
     - *node_cache
 
+.develop_check_rules:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: manual
+    - if: '$CI_COMMIT_BRANCH != "develop"'
+      when: always
+
 .build_rules:
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
-      when: always
+      when: manual
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - if: $CI_COMMIT_BRANCH == "stage"
@@ -38,18 +45,22 @@ stages:
 lint_check:
   extends:
     - .check_template
+    - .develop_check_rules
   script:
     - npm run lint
+  
 
 ts_check:
   extends:
     - .check_template
+    - .develop_check_rules
   script:
     - npm run tsc
 
 test_check:
   extends:
     - .check_template
+    - .develop_check_rules
   script:
     - npm run test
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
