@@ -91,14 +91,10 @@ build_android_apk_fastlane:
   script:
     - ruby -v
     - bundler -v
-    # - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
-    # - cp .secure_files/signing.properties android/
-    # - cp .secure_files/my-upload-key.keystore android/app/
-    # - cd android
-    # - ./gradlew clean
-    # - ./gradlew assembleRelease
-    # - cd ..
-    # - cp android/app/build/outputs/apk/release/app-release.apk app-release.apk
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - cp .secure_files/signing.properties android/
+    - cp .secure_files/my-upload-key.keystore android/app/
+    - bundle exec fastlane create_release_build
   cache:
     paths:
       - node_modules/
