@@ -95,6 +95,8 @@ build_android_apk_fastlane:
     - cd android
     - bundle install
     - bundle exec fastlane create_release_build
+    - cd ..
+    - cp android/app/build/outputs/apk/release/app-release.apk app-release.apk
   cache:
     paths:
       - node_modules/
