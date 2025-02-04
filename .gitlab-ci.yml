@@ -88,16 +88,11 @@ build_android_apk_fastlane:
     - *node_before
     - gem install bundler
     - bundle install
-    - cd android
-    - bundle install
-    - cd ..
   script:
-    - ruby -v
-    - bundler -v
     - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - cp .secure_files/signing.properties android/
     - cp .secure_files/my-upload-key.keystore android/app/
-    - bundle exec fastlane create_release_build
+    - fastlane create_release_build
   cache:
     paths:
       - node_modules/
