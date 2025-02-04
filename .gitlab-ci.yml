@@ -88,6 +88,9 @@ build_android_apk_fastlane:
     - *node_before
     - gem install bundler
     - bundle install
+    - cd android
+    - bundle install
+    - cd ..
   script:
     - ruby -v
     - bundler -v
