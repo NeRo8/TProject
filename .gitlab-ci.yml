@@ -75,12 +75,17 @@ test_check:
 
 build_android_apk:
   image: reactnativecommunity/react-native-android:latest
+  variables:
+    SECURE_FILES_DOWNLOAD_PATH: '.secure_files/'
   stage: build
   extends:
     - .build_rules
   before_script:
     - *node_before
   script:
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - cp .secure_files/signing.properties android/
+    - cp .secure_files/my-upload-key.keystore android/app/
     - cd android
     - ./gradlew clean
     - ./gradlew assembleRelease
