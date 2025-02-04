@@ -92,7 +92,9 @@ build_android_apk_fastlane:
     - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - cp .secure_files/signing.properties android/
     - cp .secure_files/my-upload-key.keystore android/app/
-    - fastlane create_release_build
+    - cd android
+    - bundle install
+    - bundle exec fastlane create_release_build
   cache:
     paths:
       - node_modules/
