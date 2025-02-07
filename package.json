@@ -14,8 +14,8 @@
     "prepare": "node .husky/install.mjs"
   },
   "validate-branch-name": {
-    "pattern": "^(master|main|develop){1}$|^(feature|fix|hotfix|refactor|test|chore)/.+$",
-    "errorMsg": "Error: please use a valid branch name. Valid branch names are: master, main, develop, feature/, fix/, hotfix/, refactor/, test/, chore/"
+    "pattern": "^(master|main|develop){1}$|^(feat|fix|hotfix|refactor|test|chore)/.+$",
+    "errorMsg": "Error: please use a valid branch name. Valid branch names are: master, main, develop, feat/, fix/, hotfix/, refactor/, test/, chore/"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
