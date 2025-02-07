@@ -4,9 +4,11 @@
 
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
-import { Test } from '../Test';
+import { Test } from '../src/Test';
 
-test('renders test file correctly', async () => {
-  render(<Test />);
-  expect(screen.getByText('Test component')).toBeTruthy();
+describe('Test component', () => {
+  test('renders test file correctly', async () => {
+    render(<Test />);
+    expect(screen.getByText('Test component')).toBeTruthy();
+  });
 });
