@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write .",
-    "test": "jest --ci --passWithNoTests --reporters=default --reporters=jest-junit --coverage --coverageReporters=text --coverageReporters=cobertura",
+    "test": "jest --ci --passWithNoTests --reporters=default --reporters=jest-junit --coverage --coverageReporters=text --coverageReporters=text-summary --coverageReporters=cobertura",
     "tsc": "tsc --noEmit",
     "prepare": "node .husky/install.mjs"
   },

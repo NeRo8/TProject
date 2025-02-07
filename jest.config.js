@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'react-native',
   collectCoverage: true,
-  reporters: ['default', 'jest-junit', 'text'],
-  coverageReporters: ['text', 'cobertura'],
+  reporters: ['default', 'jest-junit'],
+  coverageReporters: ['text', 'text-summary', 'cobertura'],
 };
