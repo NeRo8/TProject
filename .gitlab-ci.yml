@@ -67,7 +67,7 @@ test_check:
     - .develop_check_rules
   script:
     - npm run test
-  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
+  coverage: '/All files[^\|]*\|[^\|]*\s+([\d\.]+)/'
   artifacts:
     when: always
     reports:
