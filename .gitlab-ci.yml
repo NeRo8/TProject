@@ -30,26 +30,9 @@ variables:
   cache:
     - *node_cache
 
-.develop_check_rules:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "develop"'
-      when: manual
-    - if: '$CI_COMMIT_BRANCH != "develop"'
-      when: always
-
-.build_rules:
-  rules:
-    - if: $CI_COMMIT_BRANCH == "main"
-      when: manual
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "stage"
-      when: always
-
 lint_check:
   extends:
     - .check_template
-    - .develop_check_rules
   script:
     - npm run lint
   
@@ -57,14 +40,12 @@ lint_check:
 ts_check:
   extends:
     - .check_template
-    - .develop_check_rules
   script:
     - npm run tsc
 
 test_check:
   extends:
     - .check_template
-    - .develop_check_rules
   stage: test
   script:
     - npm run test
@@ -83,8 +64,6 @@ build_android_apk_fastlane:
   variables:
     SECURE_FILES_DOWNLOAD_PATH: '.secure_files/'
   stage: build
-  extends:
-    - .build_rules
   before_script:
     - *node_before
     - gem install bundler
@@ -113,8 +92,6 @@ build_android_apk:
   variables:
     SECURE_FILES_DOWNLOAD_PATH: '.secure_files/'
   stage: build
-  extends:
-    - .build_rules
   before_script:
     - *node_before
   script:
