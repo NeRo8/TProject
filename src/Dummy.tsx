@@ -8,7 +8,7 @@ export default function DummyComponent() {
   return (
     <View>
       <Text>Dummy text</Text>
-      <Text>Random text</Text>
+      <Text d>Random text</Text>
       <Text>Random text 2</Text>
 
       <Button title="Click me" onPress={() => console.log('Button clicked')} />
