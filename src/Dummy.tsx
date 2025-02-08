@@ -4,7 +4,8 @@ import { View, Text, Button } from 'react-native';
 export default function DummyComponent() {
   useEffect(() => {
     console.log('Dummy component mounted');
-  }, []);
+  }, [d]);
+
   return (
     <View>
       <Text>Dummy text</Text>
